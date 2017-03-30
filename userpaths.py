@@ -15,7 +15,6 @@ def getFileNameRHI():
     return 'WLS100s-90_radial_wind_data_2017-01-26_01-19-21_19_RHI_30.csv'
 
 def readDataFromCSV(fileName, fileType):
-    
     csv = np.genfromtxt (fileName, delimiter=";")
     timestamp=csv[1:,0]
     LOS=csv[1:,3]
@@ -27,7 +26,6 @@ def readDataFromCSV(fileName, fileType):
     return [timestamp, LOS, AZ, EL, R, RW]
 
 def readDataStoreProc(data, scanId):
-
     rows =  data['ScanID'] == scanId
     currScan = data[rows]
 
