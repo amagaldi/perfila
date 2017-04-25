@@ -14,6 +14,12 @@ def getFileNamePPI():
 def getFileNameRHI():
     return 'WLS100s-90_radial_wind_data_2017-01-26_01-19-21_19_RHI_30.csv'
 
+def getFileNameVertical():
+    return 'WLS100s-90_wind_reconstruction_data_2017-01-26_04-32-43_19_DBS_33.csv'
+
+def getFileBoundary():
+    return 'WLS100s-90_boundary_layer_altitude_2017-02-25_09-20-05_7_FIXEDFORPBL_12'
+
 def readDataFromCSV(fileName, fileType):
     csv = np.genfromtxt (fileName, delimiter=";")
     timestamp=csv[1:,0]

@@ -5,8 +5,6 @@ Created on Mon Feb 27 17:14:25 2017
 
 @author: amagaldi
 """
-
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,19 +12,13 @@ import matplotlib.cm as cm
 import os
 import collections
 from matplotlib.pyplot import *
-#import gdal
-#import wradlib
+import userpaths
 
+dataFolder = userpaths.getDataFolder()
+fileName = userpaths.getFileNameVertical()
+currFile = dataFolder+fileName
 
-
-os.chdir('/Users/amagaldi/Desktop/2017-02-24/wind_reconstruction_data/01-00/')
-print os.getcwd()
-aa='WLS100s-90_wind_reconstruction_data_2017-02-24_01-00-47_7_DBS_22.csv'
-
-
-
-
-csv = np.genfromtxt (aa , delimiter=";")
+csv = np.genfromtxt (currFile , delimiter=";")
 
 AZ=csv[1:,1] 
 EL=csv[1:,2] 
@@ -35,7 +27,7 @@ XW=csv[1:,4]
 YW=csv[1:,5]
 ZW =csv[1:,6]
 CNR =csv[1:,7]
-CI =csv[1:,7]
+print(CNR[0:3])
 
 for k in range(len(AZ)):
     if AZ[k]<0:
@@ -45,15 +37,16 @@ for k in range(len(AZ)):
 counter1=collections.Counter(R)
 re=(counter1.keys())
 re=sorted(re)
+print(re)
 ak=[]
-#aqui lo que graficamos es CI, si hacemos un loop para que grafique sobre 
+#aqui lo que graficamos es CNR, si hacemos un loop para que grafique sobre 
 #XW vel x , YW vel en y y  ZW vel en z ya esta o tal vez repetir estas lineas de abajo
 # 3 veces más
 for kk in range(len(re)):
     aj=[]
-    for k in range(len(CI)):
+    for k in range(len(CNR)):
         if R[k]==re[kk]:
-            aj.append(CI[k])
+            aj.append(CNR[k])
             ab=np.nanmean(aj)
             
     ak.append(ab)  
@@ -63,11 +56,10 @@ for kk in range(len(re)):
 plt.plot(ak,re)
 
 plt.xlabel('CNR') 
-plt.xlabel('CI') 
 plt.ylabel('altura (m.a.g.l.)')
 plt.title('2017-02-25')      
-
 plt.show()
+
 ak=[]
 for kk in range(len(re)):
     ax=[]

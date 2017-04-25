@@ -26,6 +26,12 @@ rcParams['figure.figsize'] = 15, 10
 altura=[]
 tiempo=[]
 
+dataFolder = userpaths.getDataFolder()
+fileName = userpaths.getFileBoundary()
+currFile = dataFolder+fileName
+
+csv = np.genfromtxt (currFile , delimiter=";")
+
 os.chdir('/Users/amagaldi/Desktop/2017-02-25/boundary_layer_altitude_data/')
 aa='/Users/amagaldi/Desktop/2017-02-25/boundary_layer_altitude_data/'
 for root, dirs, files in os.walk(aa):
