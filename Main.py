@@ -9,6 +9,7 @@ import re
 from DataContainer import *
 from PPIandRHI import radialWindData
 from WindReconstruction import windReconstruction
+from BoundaryLayer import boundaryLayer
 
 host = '132.248.8.202'
 port = 21
@@ -17,65 +18,6 @@ inputFolder = '/data/WIND_CUBE/'
 outputFolder = 'images'
 ftp = FTP() 
 ftp.connect(host,port)
-
-def boundaryLayer(ftp, rootFolder, selectedDate, outputFolder):
-    """ Reads and plots the boundary layer during the day"""
-    dataType = 'boundary_layer_altitude_data'
-    # Folder options:  boundary_layer_altitude_data
-    inputFolder = rootFolder+'/'+dataType
-    # Create output inputFolder
-    outputFolder = outputFolder+'/'+selectedDate
-    try:
-        os.mkdir(outputFolder)
-    except:
-        print('warning: inputFolder'+outputFolder+' already exists')
-
-    outFile = outputFolder+'/'
-    folders = ftp.nlst(inputFolder)
-    obj = DataContainer()
-    times = []
-
-    # Create regular expression to validate folder names to 00-00, 01-00 etc
-    regExpHour = re.compile('[0-9]{2}') # Match exactly 2 numbers
-    regExpCSV = re.compile('*.csv') # Match exactly csv files
-    for currFolder in folders:
-        hour = 'NONE'
-        try:
-            hour = currFolder.split('/')[-1].split('-')[-2]
-        except:
-            print('warning: This folder is not a time'+currFolder)
-
-        if regExpHour.match(hour):
-            times.append(hour) 
-            # Read files for this folder
-            files = ftp.nlst(currFolder)
-            print("list of files:",files)
-            # For each folder we need to read the files and save the data
-            for currfile in files:
-                print("BEFORE")
-                if regExpCSV.match(currfile):
-                    print("AFTER")
-                    ftp.retrbinary('RETR %s' % currfile, obj.readFromFTP)
-                    print('Working with file:' , currfile)
-                    columns = ['Timestamp','ConfiID','ScanID','LayerID','Azimuth', \
-                                       'Elevation','RLA','MLA']
-
-                    # Decide if we intialize the data or append from new file
-                    data = obj.dataToArray(columns,True)
-                    obj.clearString()
-
-    #print(times)
-    # ------- Plot CNR vel ------
-    finalOutputFile = outFile+'RLA_'+selectedDate+'_.png'
-    plt.plot(times,data['RLA'],label='Residual')
-    plt.plot(times,data['MLA'],label='Mixing')
-    plt.xlabel('Time') 
-    plt.ylabel('m')
-    plt.legend(loc='best')
-    plt.title(selectedDate)
-    plt.savefig(finalOutputFile)
-    plt.close()
-
 
 if __name__ == "__main__":
 
