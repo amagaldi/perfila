@@ -18,7 +18,7 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
         print('warning: folder'+outputFolder+' already exists')
 
     files = ftp.nlst(folder)
-    print(files)
+    #print(files)
     # Make 'generic' outputfile
     outFile = outputFolder+'/'
 
