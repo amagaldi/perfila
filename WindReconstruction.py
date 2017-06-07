@@ -42,12 +42,15 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
             # Get the grouped ranges values
             ranges = dataByRange.index.values
 
+            minute = currfile.split('_')[-4].split('-')[-2]
+            dateTitle =selectedDate +' '+ time.split('-')[-2] + ':' + minute
+
             # ------- Plot CNR vel ------
             finalOutputFile = outFile+'CNR_'+currfile[temp:].replace('csv','png')
             plt.plot(dataByRange['CNR'],ranges)
             plt.xlabel('CNR') 
             plt.ylabel('m')
-            plt.title(selectedDate+'-'+time)      
+            plt.title(dateTitle)      
             plt.savefig(finalOutputFile)
             plt.close()
 
@@ -59,7 +62,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
             plt.xlabel('m/s')
             plt.ylabel('m')
             plt.legend(loc='best')
-            plt.title('All winds:'+selectedDate+'-'+time)      
+            plt.title('All winds:'+dateTitle)
             plt.savefig(finalOutputFile)
             plt.close()
 
@@ -69,7 +72,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
             plt.plot(windMagnitude,ranges)
             plt.xlabel('m/s') 
             plt.ylabel('m')
-            plt.title('Wind magnitude :'+selectedDate+'-'+time)
+            plt.title('Wind magnitude :'+dateTitle)
             plt.savefig(finalOutputFile)
             plt.close()
 
