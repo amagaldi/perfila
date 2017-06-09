@@ -36,9 +36,9 @@ if __name__ == "__main__":
     rootFolder = inputFolder+selectedDate
     for currFolder in times:
         time = currFolder.split('/')[-1]
-        #radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)
+        radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)
         windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder)
 
-    #boundaryLayer(ftp, rootFolder,  selectedDate, outputFolder)
+    boundaryLayer(ftp, rootFolder,  selectedDate, outputFolder)
 
     ftp.quit()
