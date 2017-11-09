@@ -40,12 +40,12 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
 
             # Verify if the file comes from a PPI scan
             if currfile.find('PPI') != -1:
-                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Azimuth'], "W")
+                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Azimuth'], "N")
 
             # Verify if the file comes from a PPI scan
             if currfile.find('RHI') != -1:
                 obj.fixForRHI()
-                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "W")
+                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "N")
 
             #plt.show()
             plt.savefig(finalOutputFile)

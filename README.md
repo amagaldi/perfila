@@ -10,7 +10,10 @@ Anaconda install
 
 ### (RHI) get_boundary_layer_altitude(start date, end date)
 
-Obtains the altitude in meters (with respect to the LIDAR) of the **Mixing Layer** and the **Residual Layer**. Example of use:
+Obtains the altitude in meters (with respect to the LIDAR) of the **Mixing Layer** and the **Residual Layer**. <br>
+# Time, ID, ScanID, LOSID, Azimuth, Elevation, Range, RWS, DRWS, CNR. <br>
+**Output:** Time, ID, ScanID, LID, Azimuth, Elevation, Residual Layer Altitude (m), Mixing Layer Altitude (m) <br>
+Example of use:
 
 ```
 call lidar.get_boundary_layer_altitude('2017-04-26 12:00:00','2017-04-29 13:00:00')
