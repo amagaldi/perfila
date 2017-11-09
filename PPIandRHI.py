@@ -10,12 +10,13 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
     for the RHI and PPI scans"""
     # Folder options:  boundary_layer_altitude_data
     folder = rootfolder+'/'+'radial_wind_data'+'/'+time+'/'
+    print("Working with folder ",folder)
     # Create output folder
     outputFolder = outputFolder+'/'+selectedDate
     try:
         os.mkdir(outputFolder)
     except:
-        print('warning: folder'+outputFolder+' already exists')
+        print('WARNING: folder '+outputFolder+' already exists')
 
     files = ftp.nlst(folder)
     #print(files)
@@ -45,7 +46,7 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
             # Verify if the file comes from a PPI scan
             if currfile.find('RHI') != -1:
                 obj.fixForRHI()
-                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "N")
+                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "W")
 
             #plt.show()
             plt.savefig(finalOutputFile)

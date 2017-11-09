@@ -11,9 +11,9 @@ from PPIandRHI import radialWindData
 from WindReconstruction import windReconstruction
 from BoundaryLayer import boundaryLayer
 
-host = '132.248.8.202'
+host = '132.248.8.31'
 port = 21
-inputFolder = '/data/WIND_CUBE/' 
+inputFolder = '/perfilador/' 
 outputFolder = 'images'
 ftp = FTP() 
 ftp.connect(host,port)
@@ -40,11 +40,11 @@ if __name__ == "__main__":
             radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)
         except:
             print("Problema calculando radialWInd")
-        #try:
-            #windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder)
-        #except:
+        try:
+            windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder)
+        except:
             print("Problema calculando radialWInd")
 
-    #boundaryLayer(ftp, rootFolder,  selectedDate, outputFolder)
+    boundaryLayer(ftp, rootFolder,  selectedDate, outputFolder)
 
     ftp.quit()
