@@ -14,7 +14,7 @@ from BoundaryLayer import boundaryLayer
 host = '132.248.8.31'
 port = 21
 inputFolder = '/perfilador/' 
-outputFolder = 'images'
+outputFolder = 'ImageViewer/images'
 ftp = FTP() 
 ftp.connect(host,port)
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     allArguments = sys.argv[1:]
     if len(allArguments) < 2:
-        selectedDate = '2017-06-02'
+        selectedDate = '2017-11-30'
         times = ['00-00','01-00']
     else:
         selectedDate = allArguments[0]
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print(ftp.login())
 
     rootFolder = inputFolder+selectedDate
-    for currFolder in times:
+    for currFolder in times: 
         time = currFolder.split('/')[-1]
         try:
             radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)

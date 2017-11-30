@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_polar_scatter(values, azimuths, zeniths, zeroloc):
+def plot_polar_scatter(values, azimuths, zeniths, zeroloc, title):
     """ This function makes a polar plot using scatter particles
     Keyword arguments:
     values -- Values of the plot, related to the colors
@@ -10,6 +10,7 @@ def plot_polar_scatter(values, azimuths, zeniths, zeroloc):
     """
     fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
     plt.set_cmap('seismic_r')
+    plt.title(title)
 
     cax = ax.scatter( np.radians(zeniths), azimuths, c=values, s = 6, facecolor='0.5', lw= 0)
     # Set the zero position of the 0 degree location
