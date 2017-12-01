@@ -163,3 +163,9 @@ a:hover {
     max-width: 1500px;
   }
 }
+
+.mycenter{
+	width:100%; 
+	display:block; 
+	text-align: center;
+}

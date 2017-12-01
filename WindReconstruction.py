@@ -19,7 +19,6 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
         print('warning: folder'+outputFolder+' already exists')
 
     files = ftp.nlst(folder)
-    print(files)
     # Make 'generic' outputfile
     outFile = outputFolder+'/'
 
@@ -29,50 +28,54 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
         temp = currfile.rfind('/')+1;
         # Verify if the file comes from a DBS scan
         if currfile.find('DBS') != -1:
-            obj = DataContainer()
-            print('Working with file:' , currfile)
-            ftp.retrbinary('RETR %s' % currfile, obj.readFromFTP)
-            columns = ['Timestamp', 'Azimuth', 'Elevation','Range','Xwind','Ywind','Zwind',\
-                        'CNR','ConfIdx']
 
-            # Get the date from the file as a DataFrame
-            data = obj.dataToArray(columns)
-            # Make an average of all columns by grouped ranges
-            dataByRange = data.groupby('Range').mean()
-            # Get the grouped ranges values
-            ranges = dataByRange.index.values
+            try:
+                obj = DataContainer()
+                print('Using with file:' , currfile)
+                ftp.retrbinary('RETR %s' % currfile, obj.readFromFTP)
+                columns = ['Timestamp', 'Azimuth', 'Elevation','Range','Xwind','Ywind','Zwind',\
+                            'CNR','ConfIdx']
 
-            minute = currfile.split('_')[-4].split('-')[-2]
-            dateTitle =selectedDate +' '+ time.split('-')[-2] + ':' + minute
+                # Get the date from the file as a DataFrame
+                data = obj.dataToArray(columns)
+                # Make an average of all columns by grouped ranges
+                dataByRange = data.groupby('Range').mean()
+                # Get the grouped ranges values
+                ranges = dataByRange.index.values
 
-            # ------- Plot CNR vel ------
-            finalOutputFile = outFile+'CNR_'+currfile[temp:].replace('csv','png')
-            plt.plot(dataByRange['CNR'],ranges)
-            plt.xlabel('CNR') 
-            plt.ylabel('m')
-            plt.title(dateTitle)      
-            plt.savefig(finalOutputFile)
-            plt.close()
+                minute = currfile.split('_')[-4].split('-')[-2]
+                dateTitle =selectedDate +' '+ time.split('-')[-2] + ':' + minute
 
-            # ------- Plot X,Y,Z vel ------
-            finalOutputFile = outFile+'Allvel_'+currfile[temp:].replace('csv','png') 
-            plt.plot(dataByRange['Xwind'],ranges,label='X-Wind') 
-            plt.plot(dataByRange['Ywind'],ranges,label='Y-Wind') 
-            plt.plot(dataByRange['Zwind'],ranges,label='Z-Wind') 
-            plt.xlabel('m/s')
-            plt.ylabel('m')
-            plt.legend(loc='best')
-            plt.title('All winds:'+dateTitle)
-            plt.savefig(finalOutputFile)
-            plt.close()
+                # ------- Plot CNR vel ------
+                finalOutputFile = outFile+'CNR_'+currfile[temp:].replace('csv','png')
+                plt.plot(dataByRange['CNR'],ranges)
+                plt.xlabel('CNR') 
+                plt.ylabel('m')
+                plt.title(dateTitle)      
+                plt.savefig(finalOutputFile)
+                plt.close()
 
-            # ------- Plot Wind Magnitude ------
-            finalOutputFile = outFile+'Magnitude_'+currfile[temp:].replace('csv','png')
-            windMagnitude = np.sqrt(np.square(dataByRange['Xwind'])+np.square(dataByRange['Ywind'])+ np.square(dataByRange['Zwind']))
-            plt.plot(windMagnitude,ranges)
-            plt.xlabel('m/s') 
-            plt.ylabel('m')
-            plt.title('Wind magnitude :'+dateTitle)
-            plt.savefig(finalOutputFile)
-            plt.close()
+                # ------- Plot X,Y,Z vel ------
+                finalOutputFile = outFile+'Allvel_'+currfile[temp:].replace('csv','png') 
+                plt.plot(dataByRange['Xwind'],ranges,label='X-Wind') 
+                plt.plot(dataByRange['Ywind'],ranges,label='Y-Wind') 
+                plt.plot(dataByRange['Zwind'],ranges,label='Z-Wind') 
+                plt.xlabel('m/s')
+                plt.ylabel('m')
+                plt.legend(loc='best')
+                plt.title('All winds:'+dateTitle)
+                plt.savefig(finalOutputFile)
+                plt.close()
+
+                # ------- Plot Wind Magnitude ------
+                finalOutputFile = outFile+'Magnitude_'+currfile[temp:].replace('csv','png')
+                windMagnitude = np.sqrt(np.square(dataByRange['Xwind'])+np.square(dataByRange['Ywind'])+ np.square(dataByRange['Zwind']))
+                plt.plot(windMagnitude,ranges)
+                plt.xlabel('m/s') 
+                plt.ylabel('m')
+                plt.title('Wind magnitude :'+dateTitle)
+                plt.savefig(finalOutputFile)
+                plt.close()
+            except Exception as e:
+                print("Problema calculando Wind Reconstruction", e)
 

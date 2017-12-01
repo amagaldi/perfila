@@ -23,13 +23,14 @@ class Animation{
 		this.name = globalObjectName;
 	}
 
-	//This function starts the animation and receives the
-	// size of the canvas with respect to the size of the window 
-	init(height){
-		// Set the height of the ppi canvas to half the screen size
-		this.canvas.height = $(window).height() * height;
+	updateSize(){
 		//Gets the width from the parent element
 		this.canvas.width = $(this.canvas.parentNode).width();
+	}
+	//This function starts the animation and receives the
+	// size of the canvas with respect to the size of the window 
+	init(){
+		this.updateSize();
 
 		for (var i = 0; i < this.totImgs; i++){  
 			this.images[i] = new Image();
@@ -114,7 +115,8 @@ function draw_image(objName){
 	var h = obj.images[obj.currImg].height;
 	// resize img to fit in the canvas 
 	// You can alternately request img to fit into any specified width/height
-	var sizer = scalePreserveAspectRatio(w, h, obj.canvas.width, obj.canvas.height);
+	var sizer = scalePreserveAspectRatio(w, h, obj.canvas.width, obj.canvas.width);
+	obj.canvas.height = obj.canvas.width * (h/w);
 	$("#"+objName+"_frame_num").val(obj.currImg);
 	obj.ctx.drawImage(obj.images[obj.currImg], 0, 0, w, h, 0, 0, w * sizer, h * sizer);
 }

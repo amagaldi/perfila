@@ -1,6 +1,8 @@
 from ftplib import FTP
 from pandas import DataFrame
 from datetime import *
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 import plotutils
 import numpy as np
@@ -13,8 +15,9 @@ from BoundaryLayer import boundaryLayer
 
 host = '132.248.8.31'
 port = 21
-inputFolder = '/perfilador/' 
-outputFolder = 'ImageViewer/images'
+inputFolder = '/perfilador/'  # Folder inside the FTP
+#outputFolder = '/ServerScripts/LYDAR/images'
+outputFolder = '/home/olmozavala/Dropbox/MyProjects/LidarVisualization/Visualization_Python/ImageViewer/images'
 ftp = FTP() 
 ftp.connect(host,port)
 
@@ -23,8 +26,8 @@ if __name__ == "__main__":
 
     allArguments = sys.argv[1:]
     if len(allArguments) < 2:
-        selectedDate = '2017-11-30'
-        times = ['00-00','01-00']
+        selectedDate = '2017-12-01'
+        times = ['00-00','11-00']
     else:
         selectedDate = allArguments[0]
         hour = int(allArguments[1])
@@ -36,14 +39,8 @@ if __name__ == "__main__":
     rootFolder = inputFolder+selectedDate
     for currFolder in times: 
         time = currFolder.split('/')[-1]
-        try:
-            radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)
-        except:
-            print("Problema calculando radialWInd")
-        try:
-            windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder)
-        except:
-            print("Problema calculando radialWInd")
+        radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)
+        windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder)
 
     boundaryLayer(ftp, rootFolder,  selectedDate, outputFolder)
 

@@ -10,7 +10,7 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
     for the RHI and PPI scans"""
     # Folder options:  boundary_layer_altitude_data
     folder = rootfolder+'/'+'radial_wind_data'+'/'+time+'/'
-    print("Working with folder ",folder)
+    print("In folder ",folder)
     # Create output folder
     outputFolder = outputFolder+'/'+selectedDate
     try:
@@ -31,32 +31,32 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
         # Verfiy we are interested in the current file
         if currfile.find('PPI') != -1 or currfile.find('RHI') != -1 :
 
-            # Initialize the required container
-            obj = DataContainer()
-            print('Working with file:' , currfile)
-            ftp.retrbinary('RETR %s' % currfile, obj.readFromFTP)
-            columns = ['Timestamp','ConfiID','ScanID','LOSID','Azimuth', \
-                               'Elevation','Range','RWS','DRWS','CNR']
-            data = obj.dataToArray(columns)
+            try:
+                # Initialize the required container
+                obj = DataContainer()
+                print('Using with file:' , currfile)
+                ftp.retrbinary('RETR %s' % currfile, obj.readFromFTP)
+                columns = ['Timestamp','ConfiID','ScanID','LOSID','Azimuth', \
+                                   'Elevation','Range','RWS','DRWS','CNR']
+                data = obj.dataToArray(columns)
 
-            # Verify if the file comes from a PPI scan
-            if currfile.find('PPI') != -1:
-                title = currfile.split('/')[-1]
-                t1 = t1.split('_')
-                title = t1[4] + " " +  t1[5].replace('-',':')
-                print(title)
-                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Azimuth'], "N", title)
+                # Verify if the file comes from a PPI scan
+                if currfile.find('PPI') != -1:
+                    t1 = currfile.split('/')[-1]
+                    t1 = t1.split('_')
+                    title = t1[4] + " " +  t1[5].replace('-',':')
+                    plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Azimuth'], "N", title)
 
-            # Verify if the file comes from a PPI scan
-            if currfile.find('RHI') != -1:
-                t1 = currfile.split('/')[-1]
-                t1 = t1.split('_')
-                title = t1[4] + " " +  t1[5].replace('-',':')
-                print(title)
-                obj.fixForRHI()
-                plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "W", title)
+                # Verify if the file comes from a PPI scan
+                if currfile.find('RHI') != -1:
+                    t1 = currfile.split('/')[-1]
+                    t1 = t1.split('_')
+                    title = t1[4] + " " +  t1[5].replace('-',':')
+                    obj.fixForRHI()
+                    plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "W", title)
 
-            #plt.show()
-            plt.savefig(finalOutputFile)
-            plt.close()
-
+                #plt.show()
+                plt.savefig(finalOutputFile)
+                plt.close()
+            except Exception as e:
+                print("Problema calculando radialWInd: ", e)

@@ -8,6 +8,16 @@ var ppiAnim;
 var rhiAnim;
 var all_winds_anim;
 var wind_mag_anim;
+
+$( window ).resize(function() {
+	ppiAnim.updateSize();
+	rhiAnim.updateSize();
+	all_winds_anim.updateSize();
+	wind_mag_anim.updateSize();
+});
+
+
+
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip({
 		trigger : 'hover'
@@ -22,20 +32,20 @@ $(function () {
 	ppiAnim = new Animation(ppiNames, 'ppi_canvas', 'ppiAnim');
 	//Start loading the images and playing the animation. 
 	// It starts with a height of 50% of the window size
-	ppiAnim.init(.3);
+	ppiAnim.init();
 
 	// This object contains the names of the RHI images
 	var rhiNames = filterNames(img_names, 'RHI');
 	rhiAnim = new Animation(rhiNames, 'rhi_canvas', 'rhiAnim');
-	rhiAnim.init(.3);
+	rhiAnim.init();
 
 	var all_winds_Names = filterNames(img_names, 'Allvel');
 	all_winds_anim = new Animation(all_winds_Names, 'all_winds_canvas', 'all_winds_anim');
-	all_winds_anim.init(.3);
+	all_winds_anim.init();
 
 	var wind_mag_Names = filterNames(img_names, 'Magnitude');
 	wind_mag_anim = new Animation(wind_mag_Names, 'wind_mag_canvas', 'wind_mag_anim');
-	wind_mag_anim.init(.3);
+	wind_mag_anim.init();
 
 });
 

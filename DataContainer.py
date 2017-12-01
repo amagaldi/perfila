@@ -48,7 +48,8 @@ class DataContainer:
         """ This is the change in data we need to do for RHI scans"""
         EL = self.data['Elevation']
         negIncrement= np.where(np.diff(EL) < 0)
-        EL[negIncrement[0][0]:] = 90+ (90-EL[negIncrement[0][0]:])
+        startIdx = negIncrement[0][0]
+        self.data.loc[startIdx:,('Elevation')] = 90 + (90-EL[startIdx:])
 
     def clearString(self):
         self.datastr = ''

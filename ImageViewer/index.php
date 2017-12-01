@@ -13,30 +13,32 @@
 	<div class="container-fluid red ">
 		<div class="row">
 			<!--<div class="loader" id="loader" style="display: block;"></div>-->
-			<div class="col-lg-6 col-md-6 col-sm-6  col-xs-12 ">
+			<div class="col-lg-3 col-md-6 col-sm-12  col-xs-12 ">
+				<span class="mycenter">Plan Position Indicator (PPI)</span>
 				<canvas id="ppi_canvas" width="100%" ></canvas>
 				<?php 
 					$jsObj = 'ppiAnim';//This name MUST be harcoded
 					include 'animControls.php';
 				?>
 			</div>        
-			<div class="col-lg-6 col-md-6 col-sm-6  col-xs-12" >
+			<div class="col-lg-3 col-md-6 col-sm-12  col-xs-12" >
+				<span class="mycenter">Range Height Indicator (RHI)</span>
 				<canvas id="rhi_canvas" width="100%"></canvas>
 				<?php 
 					$jsObj = 'rhiAnim';//This name MUST be harcoded
 					include 'animControls.php';
 				?>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6  col-xs-12" >
+			<div class="col-lg-3 col-md-6 col-sm-12  col-xs-12" >
+				<span class="mycenter" >Doppler Beam Swinging (DBS)</span>
 				<canvas id="all_winds_canvas" width="100%"></canvas>
 				<?php 
 					$jsObj = 'all_winds_anim';//This name MUST be harcoded
 					include 'animControls.php';
 				?>
 			</div>
-			<div class="col-lg-6 col-md-6 col-sm-6  col-xs-12" >
+			<div class="col-lg-3 col-md-6 col-sm-12  col-xs-12" >
+				<span class="mycenter">Doppler Beam Swinging (DBS)</span>
 				<canvas id="wind_mag_canvas" width="100%"></canvas>
 				<?php 
 					$jsObj = 'wind_mag_anim';//This name MUST be harcoded
@@ -48,25 +50,31 @@
     <footer class="footer">
       <div class="d-flex justify-content-end" style="height: 65px;">
 
-      <p class="mr-auto p-2">By <a href='https://www.atmosfera.unam.mx/ciencias-atmosfericas/modelos-climaticos/alejandro-aguilar-sierra'>M. S. Alejandro Aguilar</a>, <a href='http://olmozavala.com'>Ph.D. Olmo Zavala</a> and <a href="https://github.com/ixchelzg">M.S. Ixchel Zazueta</a>, 2017</p>
-          <img src="img/goes-r-page-logo.png" class="nav_logo_min" />
-          <img src="img/IG.png" class="nav_logo_min"  />
-          <img src="img/unam.png" class="nav_logo_min"  />
-          <img src="img/logo.png" class="nav_logo_min"  />
-      </div>
-
+		  <p class="mr-auto p-2"><a href='http://olmozavala.com'>Olmo Zavala</a>,
+			  Adolfo V. Magaldi,
+			  Angel Ruiz, 
+			  Carlos Ochoa,
+			  A. Quintanar,
+			  Michel Grutter,
+			  Eugenia González,
+			  <a href="https://github.com/ixchelzg">Ixchel Zazueta</a>, 2017
+		  </p>
+			  <img src="img/unam.png" class="nav_logo_min"  />
+			  <img src="img/logo.png" class="nav_logo_min"  />
+	  </div>
+		  
     </footer>
-
-  </div>
-
+		
+	</div>
+		
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+		
     <script > var img_names= <?php echo json_encode($img_names); ?>;</script>
     <script > 
-//		console.log(img_names);
-//		console.log(last_image);
+		//		console.log(img_names);
+		//		console.log(last_image);
 	</script>
     <script src="js/Tools.js"></script>
     <script src="js/Animation.js"></script>
