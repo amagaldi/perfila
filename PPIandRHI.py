@@ -45,7 +45,7 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
                     t1 = currfile.split('/')[-1]
                     t1 = t1.split('_')
                     title = t1[4] + " " +  t1[5].replace('-',':')
-                    plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Azimuth'], "N", title)
+                    plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Azimuth'], "N", title, -25, 25)
 
                 # Verify if the file comes from a PPI scan
                 if currfile.find('RHI') != -1:
@@ -53,7 +53,7 @@ def radialWindData(ftp, rootfolder, selectedDate, time, outputFolder):
                     t1 = t1.split('_')
                     title = t1[4] + " " +  t1[5].replace('-',':')
                     obj.fixForRHI()
-                    plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "W", title)
+                    plt = plotutils.plot_polar_scatter(data['RWS'],  data['Range'],data['Elevation'], "W", title, -25, 25)
 
                 #plt.show()
                 plt.savefig(finalOutputFile)

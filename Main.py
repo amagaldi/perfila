@@ -40,7 +40,7 @@ if __name__ == "__main__":
     for currFolder in times: 
         time = currFolder.split('/')[-1]
         radialWindData(ftp, rootFolder, selectedDate, time, outputFolder)
-        windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder)
+        windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder, 2100)
 
     boundaryLayer(ftp, rootFolder,  selectedDate, outputFolder)
 

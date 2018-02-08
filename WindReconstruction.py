@@ -7,7 +7,7 @@ import os
 from DataContainer import *
 
 
-def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
+def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder, ymax):
     dataType = 'wind_reconstruction_data'
     # Folder options:  boundary_layer_altitude_data
     folder = rootFolder+'/'+dataType+'/'+time+'/'
@@ -49,7 +49,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
                 # ------- Plot CNR vel ------
                 finalOutputFile = outFile+'CNR_'+currfile[temp:].replace('csv','png')
                 plt.plot(dataByRange['CNR'],ranges)
-                plt.xlabel('CNR') 
+                plt.xlabel('CNR')
                 plt.ylabel('m')
                 plt.title(dateTitle)      
                 plt.savefig(finalOutputFile)
@@ -62,6 +62,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
                 plt.plot(dataByRange['Zwind'],ranges,label='Z-Wind') 
                 plt.xlabel('m/s')
                 plt.ylabel('m')
+                plt.ylim([0,ymax])
                 plt.legend(loc='best')
                 plt.title('All winds:'+dateTitle)
                 plt.savefig(finalOutputFile)
@@ -74,6 +75,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder):
                 plt.xlabel('m/s') 
                 plt.ylabel('m')
                 plt.title('Wind magnitude :'+dateTitle)
+                plt.ylim([0,ymax])
                 plt.savefig(finalOutputFile)
                 plt.close()
             except Exception as e:
