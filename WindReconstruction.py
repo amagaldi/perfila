@@ -49,6 +49,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder, ymax):
                 # ------- Plot CNR vel ------
                 finalOutputFile = outFile+'CNR_'+currfile[temp:].replace('csv','png')
                 plt.plot(dataByRange['CNR'],ranges)
+                plt.ylim(0, 2000)
                 plt.xlabel('CNR')
                 plt.ylabel('m')
                 plt.title(dateTitle)      
@@ -60,6 +61,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder, ymax):
                 plt.plot(dataByRange['Xwind'],ranges,label='X-Wind') 
                 plt.plot(dataByRange['Ywind'],ranges,label='Y-Wind') 
                 plt.plot(dataByRange['Zwind'],ranges,label='Z-Wind') 
+                plt.ylim(0, 2000)
                 plt.xlabel('m/s')
                 plt.ylabel('m')
                 plt.ylim([0,ymax])
@@ -72,6 +74,7 @@ def windReconstruction(ftp, rootFolder, selectedDate, time, outputFolder, ymax):
                 finalOutputFile = outFile+'Magnitude_'+currfile[temp:].replace('csv','png')
                 windMagnitude = np.sqrt(np.square(dataByRange['Xwind'])+np.square(dataByRange['Ywind'])+ np.square(dataByRange['Zwind']))
                 plt.plot(windMagnitude,ranges)
+                plt.ylim(0, 2000)
                 plt.xlabel('m/s') 
                 plt.ylabel('m')
                 plt.title('Wind magnitude :'+dateTitle)

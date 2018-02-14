@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import numpy.ma as ma
 
 def plot_polar_scatter(values, azimuths, zeniths, zeroloc, title, vmin, vmax):
     """ This function makes a polar plot using scatter particles
@@ -11,9 +12,10 @@ def plot_polar_scatter(values, azimuths, zeniths, zeroloc, title, vmin, vmax):
     fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
     plt.set_cmap('seismic_r')
     plt.title(title)
-
+    values[values>=24] = np.nan
+    values[values<=-24] = np.nan
     #cax = ax.scatter( np.radians(zeniths), azimuths, c=values, s = 6, facecolor='0.5', lw= 0, vmin = vmin, vmax = vmax)
-    cax = ax.scatter( np.radians(zeniths), azimuths, c=values, s = 6, facecolor='0.5', lw= 0)
+    cax = ax.scatter( np.radians(zeniths), azimuths, c=values, s = 6, facecolor='0.5', lw= 0, vmin = vmin, vmax = vmax)
     # Set the zero position of the 0 degree location
     ax.set_theta_zero_location(zeroloc)
 
@@ -29,7 +31,7 @@ def plot_polar_scatter(values, azimuths, zeniths, zeroloc, title, vmin, vmax):
 
     # assign the colorbar
     #cb = fig.colorbar(cax,ticks=colorBarTicks)
-    cb = fig.colorbar(cax,ticks=colorBarTicks, boundaries=range(-20,21), values=range(-20,21), extend='both')
+    cb = fig.colorbar(cax,ticks=colorBarTicks, boundaries=range(-24,25), values=range(-24,25), extend='both')
     cb.set_label("Velocidad Radial")
 
     return plt
@@ -41,7 +43,8 @@ def plot_polar_contour(values, azimuths, zeniths, zeroloc):
     rad_zeniths = np.array(zeniths)
     # Set color map
     values = np.array(values)
-
+    values[values>=24] = np.nan
+    values[values<=-24] = np.nan
     # Creates mesh grids from the rad_zeniths and azimuths 
     ZEN, AZI = np.meshgrid(rad_zeniths, rad_azimuths)
 
